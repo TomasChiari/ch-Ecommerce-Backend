@@ -4,14 +4,12 @@ export default class ProductManager {
     constructor (path) {
         this.path = path;
 
-        this.#id = 1;
-
         this.readProducts();
     }
 
     #products = [];
     #codes = [];
-    #id;
+    #id = 1;
 
     readProducts() {
         try {
@@ -23,7 +21,7 @@ export default class ProductManager {
         }
     }
 
-    addProduct (title, description, price, thumbnail, code, stock) {
+    addProduct (title, description, code, price, stock, category, thumbnail) {
 
         if (this.#codes.includes(code)) {
 
@@ -35,10 +33,12 @@ export default class ProductManager {
                 id: this.#id++,
                 title,
                 description,
-                price,
-                thumbnail,
                 code,
-                stock
+                price,
+                status: true,
+                stock,
+                category,
+                thumbnail,
             };
 
             this.#products.push(newProd);
@@ -61,18 +61,20 @@ export default class ProductManager {
 
     }
 
-    updateProduct(id, description, price, stock) {
+    updateProduct(id, description, price, status, stock) {
 
         const pos = this.#products.findIndex(prod => prod.id === id);
 
         const updatedProduct = {
-            id,
+            id: this.#products[pos].id,
             title: this.#products[pos].title,
             description,
-            price,
-            thumbnail: this.#products[pos].thumbnail,
             code: this.#products[pos].code,
-            stock
+            price,
+            status,
+            stock,
+            category: this.#products[pos].category,
+            thumbnail: this.#products[pos].thumbnail,
         };
 
         this.#products[pos] = updatedProduct;
