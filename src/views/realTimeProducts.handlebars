@@ -1,0 +1,16 @@
+<h1>Lista de Productos Real Time</h1>
+
+<div style="display: flex; gap:15px">
+{{#each products}}
+
+    <div style="border: 1px solid black;">
+        <p>Title: {{this.title}}</p>
+        <p>Description: {{this.description}}</p>
+        <p>code: {{this.code}}</p>
+        <p>Price: {{this.price}}</p>
+        <p>Stock: {{this.stock}}</p>
+        <p>Category: {{this.category}}</p>
+    </div>
+
+{{/each}}
+</div>

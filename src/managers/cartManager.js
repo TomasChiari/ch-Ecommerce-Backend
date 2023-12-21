@@ -4,13 +4,13 @@ export default class CartManager {
     constructor (path) {
         this.path = path;
 
-        this.#id = 1
-
         this.readCarts();
+
+        if (this.#carts.length) this.#id = this.#carts[this.#carts.length - 1].id
     }
 
     #carts = [];
-    #id;
+    #id = 1;
 
     readCarts() {
         try {
@@ -23,7 +23,7 @@ export default class CartManager {
 
     addCart () {
         const newCart = {
-            id: this.#id++,
+            id: this.#id += 1,
             products: []
         }
 

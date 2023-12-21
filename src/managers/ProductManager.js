@@ -5,6 +5,8 @@ export default class ProductManager {
         this.path = path;
 
         this.readProducts();
+
+        if (this.#products.length) this.#id = this.#products[this.#products.length - 1].id
     }
 
     #products = [];
@@ -30,7 +32,7 @@ export default class ProductManager {
         }else {
 
             const newProd = {
-                id: this.#id++,
+                id: this.#id += 1,
                 title,
                 description,
                 code,
@@ -92,23 +94,3 @@ export default class ProductManager {
         console.log('Producto Eliminado')
     }
 }
-
-// let pm = new ProductManager('./products.json');
-
-// pm.addProduct("test1", "testeo de descripcion 1", 540, "./images/1", 'abc123', 4);
-// pm.addProduct("test2", "testeo de descripcion 2", 170, "./images/2", 'opq456', 8);
-// // pm.addProduct("test3", "testeo de descripcion 3", 450, "./images/3", 'xyz789', 6);
-// // pm.addProduct("test4", "testeo de descripcion 4", 480, "./images/4", 'xyz789', 9);
-
-
-// console.log(pm.getProducts())
-
-// pm.updateProduct(2, "testeo de descripcion 2 modificada", 280, 2)
-
-// console.log(pm.getProductById(2))
-
-// pm.deleteProduct(2)
-
-// console.log(pm.getProducts())
-
-
