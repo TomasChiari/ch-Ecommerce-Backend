@@ -10,12 +10,15 @@ routerViews.get('/home', (req, res) => {
 
     let products = pm.getProducts();
     
-    res.render('home.handlebars', { products });
+    res.render('home', { products });
 })
 
 routerViews.get('/realTimeProducts', (req, res) => {
 
     let products = pm.getProducts();
 
-    res.render('realTimeProducts.handlebars', { products });
+    res.render('realTimeProducts', { 
+        title: 'Real Time Products',
+        products
+    });
 })

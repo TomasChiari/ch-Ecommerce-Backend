@@ -1,16 +1,17 @@
-<h1>Lista de Productos</h1>
+<h1 id="main-title">Lista de Productos</h1>
 
-<div style="display: flex; gap: 15px">
+<div id="products-container" >
 {{#each products}}
 
-    <div style="border: 1px solid black;">
-        <p>Title: {{this.title}}</p>
-        <p>Description: {{this.description}}</p>
-        <p>code: {{this.code}}</p>
-        <p>Price: {{this.price}}</p>
-        <p>Stock: {{this.stock}}</p>
-        <p>Category: {{this.category}}</p>
+    <div class="product">
+        <p class="product-property">Title: {{this.title}}</p>
+        <p class="product-property">Description: {{this.description}}</p>
+        <p class="product-property">code: {{this.code}}</p>
+        <p class="product-property">Price: {{this.price}}</p>
+        <p class="product-property">Stock: {{this.stock}}</p>
+        <p class="product-property">Category: {{this.category}}</p>
     </div>
 
 {{/each}}
 </div>
+

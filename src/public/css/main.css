@@ -1,0 +1,47 @@
+*, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-content: center;
+
+    background-color: #252525;
+}
+
+#main-title {
+    margin: 10px;
+
+    text-align: center;
+    font-size: 3rem;
+    color: beige;
+}
+
+#products-container {
+    width: 80vw;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+.product {
+    margin: 5px;
+    padding: 5px;
+
+    border-radius: 10px;
+    color: beige;
+    background-color: #757575;
+}
+
+.product-property {
+    font-size: 1.3rem;
+}
+
+
+
