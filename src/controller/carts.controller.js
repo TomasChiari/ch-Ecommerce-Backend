@@ -3,7 +3,7 @@ import cartManager from '../managers/cartManager.js';
 
 const cm = new cartManager('./data/carts.json');
 
-export const routerCarts = Router()
+const router = Router()
 
 routerCarts.post('', (req, res) => {
     cm.addCart();
@@ -32,3 +32,5 @@ routerCarts.post('/:cartId/products/:prodId', (req, res) => {
     res.json({'message':'Cart Updated'});
 
 })
+
+export default router

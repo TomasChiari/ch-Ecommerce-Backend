@@ -3,7 +3,7 @@ import ProductManager from '../managers/ProductManager.js';
 
 const pm = new ProductManager('./data/products.json');
 
-export const routerProducts = Router()
+const router = Router()
 
 routerProducts.get('', (req, res) => {
     const limit = req.query.limit;
@@ -44,3 +44,5 @@ routerProducts.delete('/:prodId', (req, res) => {
 
     res.json({'message':'Product Deleted'});
 })
+
+export default router

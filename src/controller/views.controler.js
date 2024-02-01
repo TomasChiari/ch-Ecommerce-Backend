@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import ProductManager from '../managers/ProductManager.js';
+import { auth } from '../middlewares/auth.middleware.js'
 
 
 const pm = new ProductManager('./data/products.json');
 
-export const routerViews = Router()
+const router = Router()
 
 routerViews.get('/home', (req, res) => {
 
@@ -22,3 +23,21 @@ routerViews.get('/realTimeProducts', (req, res) => {
         products
     });
 })
+
+router.get('/login', (req, res) => {
+
+    res.render('login.handlebars')
+})
+  
+router.get('/signup', (req, res) => {
+    
+    res.render('signup.handlebars')
+})
+  
+router.get('/profile', auth, (req, res) => {
+
+    const { user } = req.session
+    res.render('profile.handlebars', { user })
+})
+
+export default router
