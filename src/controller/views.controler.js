@@ -1,43 +1,37 @@
-import { Router } from 'express';
-import ProductManager from '../managers/ProductManager.js';
-import { auth } from '../middlewares/auth.middleware.js'
+import { Router } from "express";
+import ProductManager from "../managers/ProductManager.js";
+import { auth } from "../middlewares/auth.middleware.js";
 
+const pm = new ProductManager("./data/products.json");
 
-const pm = new ProductManager('./data/products.json');
+const router = Router();
 
-const router = Router()
+router.get("/home", (req, res) => {
+	let products = pm.getProducts();
 
-routerViews.get('/home', (req, res) => {
+	res.render("home", { products });
+});
 
-    let products = pm.getProducts();
-    
-    res.render('home', { products });
-})
+router.get("/realTimeProducts", (req, res) => {
+	let products = pm.getProducts();
 
-routerViews.get('/realTimeProducts', (req, res) => {
+	res.render("realTimeProducts", {
+		title: "Real Time Products",
+		products,
+	});
+});
 
-    let products = pm.getProducts();
+router.get("/login", (req, res) => {
+	res.render("login.handlebars");
+});
 
-    res.render('realTimeProducts', { 
-        title: 'Real Time Products',
-        products
-    });
-})
+router.get("/signup", (req, res) => {
+	res.render("signup.handlebars");
+});
 
-router.get('/login', (req, res) => {
+router.get("/profile", auth, (req, res) => {
+	const { user } = req.session;
+	res.render("profile.handlebars", { user });
+});
 
-    res.render('login.handlebars')
-})
-  
-router.get('/signup', (req, res) => {
-    
-    res.render('signup.handlebars')
-})
-  
-router.get('/profile', auth, (req, res) => {
-
-    const { user } = req.session
-    res.render('profile.handlebars', { user })
-})
-
-export default router
+export default router;

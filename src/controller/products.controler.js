@@ -1,48 +1,49 @@
-import { Router } from 'express';
-import ProductManager from '../managers/ProductManager.js';
+import { Router } from "express";
+import ProductManager from "../managers/ProductManager.js";
 
-const pm = new ProductManager('./data/products.json');
+const pm = new ProductManager("./data/products.json");
 
-const router = Router()
+const router = Router();
 
-routerProducts.get('', (req, res) => {
-    const limit = req.query.limit;
+router.get("", (req, res) => {
+	const limit = req.query.limit;
 
-    const products = pm.getProducts().slice(0, limit);
+	const products = pm.getProducts().slice(0, limit);
 
-    !(limit < 1) ? res.json(products) : res.json({'message':'Error: The limit must be an integer'})
-    
-})
+	!(limit < 1)
+		? res.json(products)
+		: res.json({ message: "Error: The limit must be an integer" });
+});
 
-routerProducts.get('/:prodId', (req, res) => {
-    const prodId = Number(req.params.prodId);
+router.get("/:prodId", (req, res) => {
+	const prodId = Number(req.params.prodId);
 
-    res.json(pm.getProductById(prodId));
-})
+	res.json(pm.getProductById(prodId));
+});
 
-routerProducts.post('', (req, res) => {
-    const {title, description, code, price, stock, category, thumbnail} = req.body;
+router.post("", (req, res) => {
+	const { title, description, code, price, stock, category, thumbnail } = req.body;
 
-    pm.addProduct(title, description, code, price, stock, category, thumbnail);
+	pm.addProduct(title, description, code, price, stock, category, thumbnail);
 
-    res.json({'message':'Product Created'});
-})
+	res.json({ message: "Product Created" });
+});
 
-routerProducts.put('/:prodId', (req, res) => {
-    const prodId = Number(req.params.prodId);
-    const {description, price, status, stock} = req.body;
+router.put("/:prodId", (req, res) => {
+	const prodId = Number(req.params.prodId);
+	const { description, price, status, stock } = req.body;
 
-    pm.updateProduct(prodId, description, price, status, stock);
+	pm.updateProduct(prodId, description, price, status, stock);
 
-    res.json({'message':'Product Updated'});
-})
+	res.json({ message: "Product Updated" });
+});
 
-routerProducts.delete('/:prodId', (req, res) => {
-    const prodId = Number(req.params.prodId);
+router.delete("/:prodId", (req, res) => {
+	const prodId = Number(req.params.prodId);
 
-    pm.deleteProduct(prodId)
+	pm.deleteProduct(prodId);
 
-    res.json({'message':'Product Deleted'});
-})
+	res.json({ message: "Product Deleted" });
+});
 
-export default router
+export default router;
