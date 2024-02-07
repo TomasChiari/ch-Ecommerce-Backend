@@ -9,10 +9,10 @@ router.post("/", async (req, res) => {
 
 		const user = await Users.findOne({ email });
 
-		if (!user) return res.status(400).json({ message: "Bad Request" });
+		if (!user) return res.status(401).json({ message: "Unauthorized" });
 
 		if (user.password !== password)
-			return res.status(400).json({ message: "Bad request" });
+			return res.status(401).json({ message: "Unauthorized" });
 
 		req.session.user = {
 			first_name: user.first_name,
