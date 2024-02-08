@@ -7,8 +7,6 @@ form.addEventListener("submit", (e) => {
 	const newUser = {};
 	data.forEach((value, key) => (newUser[key] = value));
 
-	console.log(newUser);
-
 	const url = "/api/users";
 	const headers = {
 		"Content-type": "application/json",
@@ -19,5 +17,5 @@ form.addEventListener("submit", (e) => {
 	fetch(url, { headers, method, body })
 		.then((res) => res.json())
 		.then((data) => console.log(data))
-		.catch((err = console.log(err)));
+		.catch((error) => console.log(error));
 });

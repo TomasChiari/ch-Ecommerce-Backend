@@ -1,25 +1,21 @@
 import { Router } from "express";
-import { Users } from "../models/user.model.js";
+import passport from "passport";
 
 const router = Router();
 
-router.post("/", async (req, res) => {
-	try {
-		const { first_name, last_name, email, password } = req.body;
-
-		const newUserInfo = {
-			first_name,
-			last_name,
-			email,
-			password,
-		};
-
-		const user = await Users.create(newUserInfo);
-
-		res.json({ status: "Success", message: user });
-	} catch (error) {
-		res.status(500).json({ status: "Error", message: "Internal Server Error" });
+router.post(
+	"/",
+	passport.authenticate("register", { failureRedirect: "/errors/400" }),
+	(req, res) => {
+		try {
+			res.status(201).json({
+				status: "Success",
+				message: "User has been created",
+			});
+		} catch (error) {
+			res.status(500).json({ status: "Error", message: "My Internal Server Error" });
+		}
 	}
-});
+);
 
 export default router;

@@ -1,32 +1,27 @@
 import { Router } from "express";
-import { Users } from "../models/user.model.js";
+import passport from "passport";
 
 const router = Router();
 
-router.post("/", async (req, res) => {
-	try {
-		const { email, password } = req.body;
+router.post(
+	"/",
+	passport.authenticate("login", { failureRedirect: "/errors/400" }),
+	async (req, res) => {
+		try {
+			req.session.user = {
+				first_name: req.user.first_name,
+				last_name: req.user.last_name,
+				email: req.user.email,
+				role: req.user.role,
+			};
+			req.session.auth = true;
 
-		const user = await Users.findOne({ email });
-
-		if (!user) return res.status(401).json({ message: "Unauthorized" });
-
-		if (user.password !== password)
-			return res.status(401).json({ message: "Unauthorized" });
-
-		req.session.user = {
-			first_name: user.first_name,
-			last_name: user.last_name,
-			email: user.email,
-			role: user.role,
-		};
-		req.session.auth = true;
-
-		res.redirect("/profile");
-	} catch (error) {
-		res.status(500).json({ status: "Error", message: "Internal Server Error" });
+			res.redirect("/profile");
+		} catch (error) {
+			res.status(500).json({ status: "Error", message: "Internal Server Error" });
+		}
 	}
-});
+);
 
 router.get("/logout", (req, res) => {
 	req.session.destroy((err) => {
@@ -38,5 +33,28 @@ router.get("/logout", (req, res) => {
 		res.redirect("/login");
 	});
 });
+
+router.get(
+	"/github",
+	passport.authenticate("github", { scope: ["user: email"] }, (req, res) => {
+		req.session.user = {
+			first_name: req.user.first_name,
+			last_name: req.user.last_name,
+			email: req.user.email,
+			role: req.user.role,
+		};
+		req.session.auth = true;
+		console.log("debug");
+	})
+);
+
+router.get(
+	"/githubcallback",
+	passport.authenticate("github", { failureRedirect: "/login" }),
+	(req, res) => {
+		req.session.user = req.user;
+		res.redirect("/profile");
+	}
+);
 
 export default router;

@@ -6,6 +6,8 @@ import MongoStore from "connect-mongo";
 import { router } from "./router/routes.js";
 import { dbConnect } from "./db/mongo.config.js";
 import { mongoUriSessions } from "./config/server.config.js";
+import { initPassport } from "./config/passport.config.js";
+import passport from "passport";
 
 export const app = express();
 
@@ -28,5 +30,9 @@ app.use(
 app.engine("handlebars", handlebars.engine());
 app.set("views", process.cwd() + "/src/views/");
 app.set("view engine", "handlebars");
+
+initPassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 router(app);
