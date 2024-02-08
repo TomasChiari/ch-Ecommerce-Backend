@@ -36,16 +36,7 @@ router.get("/logout", (req, res) => {
 
 router.get(
 	"/github",
-	passport.authenticate("github", { scope: ["user: email"] }, (req, res) => {
-		req.session.user = {
-			first_name: req.user.first_name,
-			last_name: req.user.last_name,
-			email: req.user.email,
-			role: req.user.role,
-		};
-		req.session.auth = true;
-		console.log("debug");
-	})
+	passport.authenticate("github", { scope: ["user: email"] }, (req, res) => {})
 );
 
 router.get(
@@ -53,6 +44,7 @@ router.get(
 	passport.authenticate("github", { failureRedirect: "/login" }),
 	(req, res) => {
 		req.session.user = req.user;
+		req.session.auth = true;
 		res.redirect("/profile");
 	}
 );
